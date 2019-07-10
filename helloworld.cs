@@ -958,63 +958,63 @@ class <派生类>：<基类>{...}
 // }
 
 /*文件的输入和输出*/
-using System;
-using System.IO;
-namespace FileOpe
-{
-	class readFile
-	{
-		public string path;
-		//构造函数初始化赋值
-		public readFile(string p)
-		{
-			path = p;
-		}
+// using System;
+// using System.IO;
+// namespace FileOpe
+// {
+// 	class readFile
+// 	{
+// 		public string path;
+// 		//构造函数初始化赋值
+// 		public readFile(string p)
+// 		{
+// 			path = p;
+// 		}
 
-		public void reading(FileStream F)
-		{
-			Console.WriteLine("Starting reading file");
-			for (int i=1; i<= 20; i++)
-			{
-				Console.Write(F.ReadByte() + "");
-			}
+// 		public void reading(FileStream F)
+// 		{
+// 			Console.WriteLine("Starting reading file");
+// 			for (int i=1; i<= 20; i++)
+// 			{
+// 				Console.Write(F.ReadByte() + "");
+// 			}
 
-		}
+// 		}
 
-		public void write(FileStream F)
-		{
-			for(int i=1; i<= 20; i++)
-			{
-				F.WriteByte((byte)i);
-			}
-		}
-	}
+// 		public void write(FileStream F)
+// 		{
+// 			for(int i=1; i<= 20; i++)
+// 			{
+// 				F.WriteByte((byte)i);
+// 			}
+// 		}
+// 	}
 
-	class MainTest
-	{
-		static void Main(string[] args)
-		{
-			string path = "D:\\liaga\\C#";
-			readFile rf = new readFile(path);
-			FileStream F = new FileStream("red.txt",FileMode.OpenOrCreate,FileAccess.ReadWrite,
-				FileShare.ReadWrite);
-			// for(int i=1; i<= 20; i++)
-			// {
-			// 	F.WriteByte((byte)i);
-			// }
-			rf.write(F);
-			F.Position = 0;
-			rf.reading(F);
-			// for (int i=1; i<= 20; i++)
-			// {
-			// 	Console.Write(F.ReadByte() + "");
-			// }
+// 	class MainTest
+// 	{
+// 		static void Main(string[] args)
+// 		{
+// 			string path = "D:\\liaga\\C#";
+// 			readFile rf = new readFile(path);
+// 			FileStream F = new FileStream("red.txt",FileMode.OpenOrCreate,FileAccess.ReadWrite,
+// 				FileShare.ReadWrite);
+// 			// for(int i=1; i<= 20; i++)
+// 			// {
+// 			// 	F.WriteByte((byte)i);
+// 			// }
+// 			rf.write(F);
+// 			F.Position = 0;
+// 			rf.reading(F);
+// 			// for (int i=1; i<= 20; i++)
+// 			// {
+// 			// 	Console.Write(F.ReadByte() + "");
+// 			// }
 
-			F.Close();
-			Console.ReadKey();
-		}
-	}
-}
+// 			F.Close();
+// 			Console.ReadKey();
+// 		}
+// 	}
+// }
 
 
 // using System;
@@ -1045,3 +1045,82 @@ namespace FileOpe
 //         }
 //     }
 // }
+
+/*
+
+高级教程内容
+
+*/
+
+/*多线程*/
+// using System;
+// using System.Threading;
+
+// namespace ThreadTest
+// {
+// 	class ThreadProgram
+// 	{
+// 		public static void subThread()
+// 		{
+// 			Console.WriteLine("This is a Child Thread.");
+// 		}
+
+// 		static void Main()
+// 		{
+// 			ThreadStart ct = new ThreadStart(subThread);
+// 			Console.WriteLine("In Main: Creating the child thread...");
+// 			Thread ct1 = new Thread(ct);
+// 			ct1.Start();
+// 			Console.ReadKey();
+// 		}
+// 	}
+// }
+
+/*匿名方法*/
+
+using System;
+
+delegate void NumberChanger(int n);
+namespace DelegateAppl
+{
+    class TestDelegate
+    {
+        static int num = 10;
+        public static void AddNum(int p)
+        {
+            num += p;
+            Console.WriteLine("Named Method: {0}", num);
+        }
+
+        public static void MultNum(int q)
+        {
+            num *= q;
+            Console.WriteLine("Named Method: {0}", num);
+        }
+
+        static void Main(string[] args)
+        {
+            // 使用匿名方法创建委托实例
+            NumberChanger nc = delegate(int x)
+            {
+               Console.WriteLine("Anonymous Method: {0}", x);
+            };
+            
+            // 使用匿名方法调用委托
+            nc(10);//10
+
+            // 使用命名方法实例化委托
+            nc =  new NumberChanger(AddNum);
+            
+            // 使用命名方法调用委托
+            nc(5);//15
+
+            // 使用另一个命名方法实例化委托
+            nc =  new NumberChanger(MultNum);
+            
+            // 使用命名方法调用委托
+            nc(2);//30
+            Console.ReadKey();
+        }
+    }
+}
